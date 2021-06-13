@@ -141,7 +141,7 @@ beta_coef
 #   (Intercept)       valence   probability 
 # -1.009122e-16  3.958397e-01  3.244347e-01
 ```
-The linear relationship between reference (DV) and `valence` and `probability` (IVs) is positive and significant. Reference judgments were significantly correlated both with `valence` (b = 0.394, t(56) = 3.436, p < 0.01, eta^2 = 0.17,  beta = 3.958) and `probability` (b = 0.324, t(56) = 2.817, p < 0.01, eta^2 = 0.12, beta = 3.244). Together, the two variables explain R^2 = 0.25% of the variability in reference judgments, which is a large effect (Cohen, 1988).
+The linear relationship between reference (DV) and `valence` and `probability` (IVs) is positive and significant. Reference judgments were significantly correlated both with `valence` (_b_ = 0.394, _t_(56) = 3.436, _p_ < 0.01, eta^2 = 0.17,  beta = 3.958) and `probability` (_b_ = 0.324, _t_(56) = 2.817, _p_ < 0.01, eta^2 = 0.12, beta = 3.244). Together, the two variables explain R^2 = 0.25% of the variability in reference judgments, which is a large effect (Cohen, 1988).
 
 ## Bayesian Linear Regression
 
