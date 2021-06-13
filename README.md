@@ -244,6 +244,14 @@ model_performance(model)
 ### Bayesian Variant
 
 ## References
+- Ben-Shachar, M., Lüdecke, D., Makowski, D. (2020). effectsize: Estimation of Effect Size Indices and Standardized Parameters. Journal of Open Source Software, 5(56), 2815. doi:10.21105/joss.02815
 - Cohen J. (1988). Statistical Power Analysis for the Behavioral Sciences, 2nd Ed. Hillsdale, NJ: Laurence Erlbaum Associates.
+- Goodrich, B., Gabry, J., Ali, I., Brilleman, S. (2020). rstanarm: Bayesian applied regression modeling via Stan. R package version 2.21.1. Retrieved from: https://mc-stan.org/rstanarm
+- Lüdecke, D., Waggoner, P., Makowski, D. (2019). insight: A Unified Interface to Access Information from ModelObjects in R. _Journal of Open Source Software_, *4*(38), 1412. doi:10.21105/joss.01412
+- Lüdecke, et al., (2021). performance: An R Package for Assessment, Comparison and Testing of Statistical Models. Journal of Open Source Software, 6(60), 3139. doi:10.21105/joss.03139
 - Makowski, D., Ben-Shachar, M. S., Lüdecke, D. (2019). bayestestR: Describing Effects and Their Uncertainty, Existence and Significance Within the Bayesian Framework. Journal of Open Source Software, 4(40), 1541. doi:10.21105/joss.01541
-- 
+- Makowski, D., Ben-Shachar, M. S., Lüdecke, D. (2020). *Estimation of Model-Based Predictions, Contrasts and Means*. CRAN.
+- Makowski, D., Ben-Shachar, M. S., Lüdecke, D. (2020). *The {easystats} collection of R packages*. GitHub.
+- Morey, R. D., Rouder, J. N. (2018). BayesFactor: Computation of Bayes Factors for Common Designs. R package version 0.9.12-4.2. Retrieved from: https://CRAN.R-project.org/package=BayesFactor
+- R Core Team (2021). R: A language and environment for statistical computing. R Foundation for Statistical Computing, Vienna, Austria. Retrieved from: https://www.R-project.org/
+- Wickham, H., François, R., Henry, L., and Müller, K. (2021). dplyr: A Grammar of Data Manipulation. R package version 1.0.6. Retrieved from: https://CRAN.R-project.org/package=dplyr
