@@ -141,9 +141,101 @@ beta_coef
 #   (Intercept)       valence   probability 
 # -1.009122e-16  3.958397e-01  3.244347e-01
 ```
-The linear relationship between reference (DV) and `valence` and `probability` (IVs) is positive and significant. Reference judgments were significantly correlated both with `valence` (_b_ = 0.394, _t_(56) = 3.436, _p_ < 0.01, eta^2 = 0.17,  beta = 3.958) and `probability` (_b_ = 0.324, _t_(56) = 2.817, _p_ < 0.01, eta^2 = 0.12, beta = 3.244). Together, the two variables explain R^2 = 0.25% of the variability in reference judgments, which is a large effect (Cohen, 1988).
+The linear relationship between `reference`(DV) and `valence` and `probability` (IVs) is positive and significant. `Reference` judgments were significantly correlated both with `valence` (_b_ = 0.394, _t_(56) = 3.436, _p_ < 0.01, eta^2 = 0.17,  beta = 3.958) and `probability` (_b_ = 0.324, _t_(56) = 2.817, _p_ < 0.01, eta^2 = 0.12, beta = 3.244). Together, the two variables explain R^2 = 0.25% of the variability in `reference` judgments, which is a large effect (Cohen, 1988).
 
 ## Bayesian Linear Regression
+
+Fit the model and print the summary of posterior distribution:
+``` r
+model <- stan_glm(reference ~ valence + probability, data = data)
+posteriorsDs <- describe_posterior(model)
+print_md(posteriorsDs, digits = 2)
+# [1] "Table: Summary of Posterior Distribution"                                               
+# [2] ""                                                                                       
+# [3] "|Parameter   | Median|       95% CI |    pd |         ROPE | % in ROPE| Rhat |    ESS |"
+# [4] "|:-----------|------:|:-------------|:------|:-------------|---------:|:-----|:-------|"
+# [5] "|(Intercept) |   0.12|[-0.10, 0.29] |87.85% |[-0.05, 0.05] |    21.10%|0.999 |4745.00 |"
+# [6] "|valence     |   0.39|[ 0.17, 0.64] |99.92% |[-0.05, 0.05] |        0%|0.999 |4528.00 |"
+# [7] "|probability |   0.33|[ 0.10, 0.55] |99.65% |[-0.05, 0.05] |        0%|1.000 |4780.00 |"
+```
+
+Extract the posteriors:
+``` r
+posteriors <- insight::get_parameters(model)
+```
+
+Compute the point-estimate (in this case median; this is similar to _b_ coefficients in frequentist version):
+``` r
+median(posteriors$valence)
+# [1] 0.3948783
+
+median(posteriors$probability)
+# [1] 0.325649
+```
+`valence`: at 0.396, there is 50% chance that the true effect is higher and 50% chance that the effect is lower.
+`probability`: at 0.321, there is 50% chance that the true effect is higher and 50% chance that the effect is lower.
+
+Compute the credible intervals (similar to frequentist confidence intervals). Use 89% CIs instead of 95% CIs (as in frequentist framework), as 89% level gives more stable results:
+``` r
+hdi(posteriors$valence, ci = 0.89)
+# 89% HDI: [0.19, 0.58]
+
+hdi(posteriors$probability, ci = 0.89)
+# 89% HDI: [0.14, 0.50]
+```
+`valence`: the effect has 89% chance of falling within the [0.19, 0.58] range.
+`probability`: the effect has 89% chance of falling within the [0.14, 0.50] range.
+
+Effect significance in terms of ROPE (Region of Practical Equivalence, see Makowski, Ben-Shachar, Lüdecke, 2019):
+``` r
+ropeVal <- 0.1 * sd(data$reference) # define ROPE as the tenth of the standard deviation of the reference — a “negligible” effect size (Cohen, 1988)
+ropeRange <- c(-ropeVal, ropeVal)
+ropeRange
+# [1] -0.05024778  0.05024778
+
+rope(posteriors$valence, range = ropeRange, ci = 0.89)
+# inside ROPE
+# -----------
+# 0.00 %
+
+rope(posteriors$probability, range = ropeRange, ci = 0.89)
+# inside ROPE
+# -----------
+# 0.00 %
+```
+
+Probability of direction (pd):
+``` r
+positiveValence <- posteriors %>%
+  filter(valence > 0) %>% # select only positive values
+  nrow() # get length
+positiveValence / nrow(posteriors) * 100
+# [1] 99.95
+
+positiveProbability <- posteriors %>%
+  filter(probability > 0) %>%
+  nrow()
+positiveProbability / nrow(posteriors) * 100
+# [1] 99.72
+```
+`valence`: the effect is positive with a probability of 99.95%.
+`probability`: the effect is positive with a probability of 99.72%.
+
+Describe the logistic model for comparison:
+``` r
+model <- stan_glm(reference ~ valence + probability, data = data, family = "binomial", refresh = 0)
+describe_posterior(model, test = c("pd", "ROPE", "BF"))
+# Parameter   | Median |         95% CI |     pd |          ROPE | % in ROPE |  Rhat |     ESS |    BF
+# ----------------------------------------------------------------------------------------------------
+# (Intercept) |  -2.01 | [-3.22, -0.85] | 99.98% | [-0.18, 0.18] |        0% | 1.000 | 2467.00 | 72.24
+# valence     |   2.04 | [ 0.82,  3.40] |   100% | [-0.18, 0.18] |        0% | 1.000 | 2896.00 | 34.56
+# probability |   1.73 | [ 0.48,  3.02] | 99.67% | [-0.18, 0.18] |        0% | 1.001 | 2770.00 |  5.61
+
+model_performance(model)
+# ELPD    | ELPD_SE |  LOOIC | LOOIC_SE |   WAIC |    R2 |  RMSE | Sigma | Log_loss | Score_log | Score_spherical
+# ---------------------------------------------------------------------------------------------------------------
+# -35.471 |   4.078 | 70.942 |    8.156 | 70.896 | 0.284 | 0.429 | 1.000 |    0.547 |   -19.392 |           0.057
+```
 
 ## Mediation Analysis
 
@@ -153,4 +245,5 @@ The linear relationship between reference (DV) and `valence` and `probability` (
 
 ## References
 - Cohen J. (1988). Statistical Power Analysis for the Behavioral Sciences, 2nd Ed. Hillsdale, NJ: Laurence Erlbaum Associates.
+- Makowski, D., Ben-Shachar, M. S., Lüdecke, D. (2019). bayestestR: Describing Effects and Their Uncertainty, Existence and Significance Within the Bayesian Framework. Journal of Open Source Software, 4(40), 1541. doi:10.21105/joss.01541
 - 
