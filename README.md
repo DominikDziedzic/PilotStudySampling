@@ -20,6 +20,8 @@ Content of the repository (after opening each file, right-click and select Save 
   -  [in .pdf]() 
 - [**Source code in .R**]()
 
+# Analysis
+
 The results of statistical analyses are presented below: 
 - [**Frequentist Linear Regression**](https://github.com/DominikDziedzic/PilotStudySampling#frequentist-linear-regression)
 - [**Bayesian Linear Regression**](https://github.com/DominikDziedzic/PilotStudySampling#bayesian-linear-regression)
@@ -29,6 +31,77 @@ The results of statistical analyses are presented below:
 - [**References**](https://github.com/DominikDziedzic/PilotStudySampling#references)
 
 ## Frequentist Linear Regression
+
+### Required packages
+Run the following code in R to install the required packages:
+``` r
+install.packages("")
+install.packages("")
+install.packages("")
+```
+
+Load the required packages:
+``` r
+library()
+library()
+library()
+```
+
+### Import data
+Download raw data files in [.txt]() or [.csv format]() and run the following in R to import data:
+``` r
+# a) if in .txt:
+data <- read.delim(file.choose())
+# b) if in .csv:
+data <- read.csv(file.choose(), sep = ";")
+
+attach(data) # attach your data, so that objects in the database can be accessed by giving their names
+```
+
+Let's review the dataset:
+``` r
+str(data)
+# 'data.frame':	59 obs. of  5 variables:
+#  $ valence        : int  1 1 1 1 1 1 1 1 1 1 ...
+#  $ probability    : int  1 1 1 1 1 1 1 1 1 1 ...
+#  $ reference      : int  1 0 1 0 1 1 1 1 1 1 ...
+#  $ sub_valence    : int  1 70 50 19 50 100 50 100 88 50 ...
+#  $ sub_probability: int  99 55 100 44 50 50 20 0 22 100 ...
+```
+The dataset consists of two IVs (i.e., "valence" and "probability") and the DV ("reference" = responses to a scenario). The length of the dataset is 59. Assignment to conditions was random, with 13 participants in the good-probable condition, 16 in the good-improbable, 14 in the bad-probable, and 16 in the bad-improbable. Definitions of the conditions are as follow:
+- In the **good-probable condition**, the participant reads the following scenario:
+  - Suppose that, without turning and looking, David points to the place on his wall which has long been occupied by a picture of Rudolf Carnap, a famous philosopher, and he says: “**That** is a picture of one of the greatest philosophers of the twentieth century, and now it is yours — it is your birthday present”. But unbeknownst to David, someone has replaced his picture of Carnap with a valuable portrait of Marquis de Lafayette, a French aristocrat, a general in the American Revolutionary War, and a dignified figure but not a philosopher at all. You have seen paintings that look so valuable hanging on people’s walls. Indeed, many people have such paintings in their homes in the town where David lives. Lafayette is an important figure in the history of the town — wounded during a battle near the town, he still managed to organize a successful retreat saving many lives — and many people in the town display his portrait to this day.
+- In the **good-improbable condition**, the last three sentences are replaced with:
+  - You have never seen anything that looked so valuable hanging on someone’s wall. Indeed, no one has such paintings in their homes in the town where David lives. Given the technique and execution, you do not have the slightest doubt that the painting was produced a long time ago and that, in all probability, the work is authentic.
+- In the **bad-probable condition**, the participant reads:
+  - Suppose that, without turning and looking, David points to the place on his wall which has long been occupied by a picture of Rudolf Carnap, a famous philosopher, and he says: “**That** is a picture of one of the greatest philosophers of the twentieth century, and now it is yours — it is your birthday present”. But unbeknownst to David, someone has replaced his picture of Carnap with a cheap and nasty picture of you that has been photoshopped to show you in a patently offensive way. You have seen pictures that look so offensive hanging on people’s walls. Indeed, many people have such pictures in their homes in the town where David lives — many people make such crude jokes nowadays.
+- In the **bad-improbable condition**, the last two sentences are replaced with:
+  - You have never seen anything that would look so offensive hanging on someone’s wall. Indeed, no one has such pictures in their homes in the town where David lives. The picture is so offensive that you can’t help but wonder why anyone would produce such an image in the first place.
+
+In all four conditions, the participant answers the question: _When David uses the expression “That”, is he talking about: (A) The picture of Rudolf Carnap? (B1) The portrait of Marquis de Lafayette? / (B2) The picture of you?_ (The choice between B1 and B2 depends on the assigned condition — good or bad).
+
+The two remaining variables — "sub_valence" and "sub_variability" are relevant for mediation analysis (see below).
+
+Compute the model with interaction
+``` r
+summary(lm(reference ~ valence * probability, data = data))
+# Residuals:
+#     Min      1Q  Median      3Q     Max 
+# -0.8461 -0.4286 -0.1250  0.5000  0.8750 
+
+# Coefficients:
+                    Estimate Std. Error t value Pr(>|t|)  
+# (Intercept)          0.12500    0.11115   1.125   0.2656  
+# valence              0.37500    0.15718   2.386   0.0205 *
+# probability          0.30357    0.16270   1.866   0.0674 .
+# valence:probability  0.04258    0.23244   0.183   0.8553  
+# ---
+# Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+# Residual standard error: 0.4446 on 55 degrees of freedom
+# Multiple R-squared:  0.2577,	Adjusted R-squared:  0.2172 
+# F-statistic: 6.363 on 3 and 55 DF,  p-value: 0.0008822
+```
 
 ## Bayesian Linear Regression
 
