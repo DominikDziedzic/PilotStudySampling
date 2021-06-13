@@ -9,6 +9,8 @@ This study demonstrates the causal relationship between value- and probability-g
 
 To view the extended list of references on the sampling mechanism, visit: [**List of References**](https://github.com/DominikDziedzic/IntuitionGenerationProject/blob/main/List%20of%20References%20-%20Towards%20a%20Model%20of%20Intuition%20Generation.pdf).
 
+---
+
 Content of the repository (after opening each file, right-click and select Save as):
 - **Raw data** 
   - [in .txt]() 
