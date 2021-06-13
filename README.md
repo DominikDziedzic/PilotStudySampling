@@ -82,7 +82,7 @@ In all four conditions, the participant answers the question: _When David uses t
 
 The two remaining variables — `sub_valence` and `sub_variability` — are relevant for mediation analysis (see below).
 
-Compute the model with interaction
+Compute the model with interaction:
 ``` r
 summary(lm(reference ~ valence * probability, data = data))
 # Residuals:
