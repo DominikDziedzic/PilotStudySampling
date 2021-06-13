@@ -80,7 +80,7 @@ The dataset consists of two IVs (i.e., "valence" and "probability") and the DV (
 
 In all four conditions, the participant answers the question: _When David uses the expression “That”, is he talking about: (A) The picture of Rudolf Carnap? (B1) The portrait of Marquis de Lafayette? / (B2) The picture of you?_ (The choice between B1 and B2 depends on the assigned condition — good or bad).
 
-The two remaining variables — "sub_valence" and "sub_variability" are relevant for mediation analysis (see below).
+The two remaining variables — "sub_valence" and "sub_variability" — are relevant for mediation analysis (see below).
 
 Compute the model with interaction
 ``` r
@@ -103,6 +103,46 @@ summary(lm(reference ~ valence * probability, data = data))
 # F-statistic: 6.363 on 3 and 55 DF,  p-value: 0.0008822
 ```
 
+Since the valence × probability type interaction is insignificant let's try and compute the model without interaction:
+``` r
+summary(lm(reference ~ valence + probability, data = data))
+model <- lm(reference ~ valence + probability, data = data)
+# Residuals:
+#     Min      1Q  Median      3Q     Max 
+# -0.8342 -0.4397 -0.1153  0.4903  0.8847 
+
+# Coefficients:
+#             Estimate Std. Error t value Pr(>|t|)   
+# (Intercept)  0.11526    0.09677   1.191  0.23863   
+# valence      0.39447    0.11479   3.436  0.00112 **
+# probability  0.32443    0.11519   2.817  0.00669 **
+# ---
+# Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+# Residual standard error: 0.4407 on 56 degrees of freedom
+# Multiple R-squared:  0.2572,	Adjusted R-squared:  0.2307 
+# F-statistic: 9.696 on 2 and 56 DF,  p-value: 0.0002423
+```
+The effects of valence and probability are significant (p < 0.01). Compute eta squared values by running:
+``` r
+effectsize::eta_squared(model)
+# Parameter   | Eta2 (partial) |       90% CI
+# -------------------------------------------
+# valence     |           0.17 | [0.05, 0.32]
+# probability |           0.12 | [0.02, 0.27]
+```
+
+And beta coefficients (standarized coefficients):
+``` r
+dataStand <- lapply(data, scale) # standardizes all variables
+modelStand <- lm(reference ~ valence + probability, data = dataStand)
+beta_coef <- coef(modelStand)
+beta_coef
+#   (Intercept)       valence   probability 
+# -1.009122e-16  3.958397e-01  3.244347e-01
+```
+The linear relationship between reference (DV) and valence & probability (IV) is positive and significant. Reference judgments were significantly correlated both with valence (b = 0.394, t(56) = 3.436, p < 0.01, eta^2 = 0.17,  beta = 3.958) and probability (b = 0.324, t(56) = 2.817, p < 0.01, eta^2 = 0.12, beta = 3.244). Together, the two variables explain R^2 = 0.25% of the variability in reference judgments, which is a large effect (Cohen, 1988)
+
 ## Bayesian Linear Regression
 
 ## Mediation Analysis
@@ -112,3 +152,5 @@ summary(lm(reference ~ valence * probability, data = data))
 ### Bayesian Variant
 
 ## References
+- Cohen J. (1988). Statistical Power Analysis for the Behavioral Sciences, 2nd Ed. Hillsdale, NJ: Laurence Erlbaum Associates.
+- 
