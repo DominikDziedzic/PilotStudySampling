@@ -68,7 +68,7 @@ str(data)
 #  $ sub_valence    : int  TODO
 #  $ sub_probability: int  TODO
 ```
-The dataset consists of two IVs (i.e., "valence" and "probability") and the DV ("reference" = responses to a scenario). The length of the dataset is 59. Assignment to conditions was random, with 13 participants in the good-probable condition, 16 in the good-improbable, 14 in the bad-probable, and 16 in the bad-improbable. Definitions of the conditions are as follow:
+The dataset consists of two IVs (i.e., `valence` and `probability`) and the DV (`reference` = responses to a scenario). The length of the dataset is 59. Assignment to conditions was random, with 13 participants in the good-probable condition, 16 in the good-improbable, 14 in the bad-probable, and 16 in the bad-improbable. Definitions of the conditions are as follow:
 - In the **good-probable condition**, the participant reads the following scenario:
   - Suppose that, without turning and looking, David points to the place on his wall which has long been occupied by a picture of Rudolf Carnap, a famous philosopher, and he says: “**That** is a picture of one of the greatest philosophers of the twentieth century, and now it is yours — it is your birthday present”. But unbeknownst to David, someone has replaced his picture of Carnap with a valuable portrait of Marquis de Lafayette, a French aristocrat, a general in the American Revolutionary War, and a dignified figure but not a philosopher at all. You have seen paintings that look so valuable hanging on people’s walls. Indeed, many people have such paintings in their homes in the town where David lives. Lafayette is an important figure in the history of the town — wounded during a battle near the town, he still managed to organize a successful retreat saving many lives — and many people in the town display his portrait to this day.
 - In the **good-improbable condition**, the last three sentences are replaced with:
@@ -80,7 +80,7 @@ The dataset consists of two IVs (i.e., "valence" and "probability") and the DV (
 
 In all four conditions, the participant answers the question: _When David uses the expression “That”, is he talking about: (A) The picture of Rudolf Carnap? (B1) The portrait of Marquis de Lafayette? / (B2) The picture of you?_ (The choice between B1 and B2 depends on the assigned condition — good or bad).
 
-The two remaining variables — "sub_valence" and "sub_variability" — are relevant for mediation analysis (see below).
+The two remaining variables — `sub_valence` and `sub_variability` — are relevant for mediation analysis (see below).
 
 Compute the model with interaction
 ``` r
@@ -103,7 +103,7 @@ summary(lm(reference ~ valence * probability, data = data))
 # F-statistic: 6.363 on 3 and 55 DF,  p-value: 0.0008822
 ```
 
-Since the valence × probability type interaction is insignificant let's try and compute the model without interaction:
+Since the `valence` × `probability` type interaction is insignificant let's try and compute the model without interaction:
 ``` r
 summary(lm(reference ~ valence + probability, data = data))
 model <- lm(reference ~ valence + probability, data = data)
@@ -123,7 +123,7 @@ model <- lm(reference ~ valence + probability, data = data)
 # Multiple R-squared:  0.2572,	Adjusted R-squared:  0.2307 
 # F-statistic: 9.696 on 2 and 56 DF,  p-value: 0.0002423
 ```
-The effects of valence and probability are significant (p < 0.01). Compute eta squared values by running:
+The effects of `valence` and `probability` are significant (p < 0.01). Compute eta squared values by running:
 ``` r
 effectsize::eta_squared(model)
 # Parameter   | Eta2 (partial) |       90% CI
@@ -141,7 +141,7 @@ beta_coef
 #   (Intercept)       valence   probability 
 # -1.009122e-16  3.958397e-01  3.244347e-01
 ```
-The linear relationship between reference (DV) and valence & probability (IV) is positive and significant. Reference judgments were significantly correlated both with valence (b = 0.394, t(56) = 3.436, p < 0.01, eta^2 = 0.17,  beta = 3.958) and probability (b = 0.324, t(56) = 2.817, p < 0.01, eta^2 = 0.12, beta = 3.244). Together, the two variables explain R^2 = 0.25% of the variability in reference judgments, which is a large effect (Cohen, 1988)
+The linear relationship between reference (DV) and `valence` and `probability` (IVs) is positive and significant. Reference judgments were significantly correlated both with `valence` (b = 0.394, t(56) = 3.436, p < 0.01, eta^2 = 0.17,  beta = 3.958) and `probability` (b = 0.324, t(56) = 2.817, p < 0.01, eta^2 = 0.12, beta = 3.244). Together, the two variables explain R^2 = 0.25% of the variability in reference judgments, which is a large effect (Cohen, 1988).
 
 ## Bayesian Linear Regression
 
