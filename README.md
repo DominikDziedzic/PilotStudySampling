@@ -16,8 +16,8 @@ Content of the repository (after opening each file, right-click and select Save 
   - in .txt() 
   - in .csv()
 - **Experimental materials**
-  -  in .docx()
-  -  in .pdf() 
+  -  [in .docx](https://github.com/DominikDziedzic/PilotStudySampling/blob/main/Experimental%20Materials.docx?raw=true)
+  -  [in .pdf](https://github.com/DominikDziedzic/PilotStudySampling/raw/main/Experimental%20Materials.pdf) 
 - **Source code in .R**
   - [Frequentist and Bayesian Linear Regression](https://raw.githubusercontent.com/DominikDziedzic/PilotStudySampling/main/Analysis%2C%20Frequentist%20and%20Bayesian%20Linear%20Regression.R)
   - Mediation Analysis()
