@@ -134,7 +134,7 @@ model <- lm(reference ~ valence + probability, data = data)
 # Multiple R-squared:  0.2572,	Adjusted R-squared:  0.2307 
 # F-statistic: 9.696 on 2 and 56 DF,  p-value: 0.0002423
 ```
-The effects of `valence` and `probability` are significant (p < 0.01). Compute eta squared values by running:
+The effects of `valence` and `probability` are significant (p < 0.01). Compute the eta squared values by running:
 ``` r
 effectsize::eta_squared(model)
 # Parameter   | Eta2 (partial) |       90% CI
