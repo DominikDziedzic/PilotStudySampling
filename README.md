@@ -82,6 +82,17 @@ In all four conditions, the participant answers the question: _When David uses t
 
 The two remaining variables — `sub_valence` and `sub_variability` — are relevant for mediation analysis (see below).
 
+Coding:
+- **$ valence:**
+  - "1" = good
+  - "0" = bad
+- **$ probability:**
+  - "1" = probable
+  - "0" = improbable
+- **$ reference:**
+  - "0" = The picture of Rudolf Carnap
+  - "1" = The portrait of Marquis de Lafayette / The picture of you
+
 Compute the model with interaction:
 ``` r
 summary(lm(reference ~ valence * probability, data = data))
