@@ -37,16 +37,22 @@ The results of statistical analyses are presented below:
 ### Required packages
 Run the following code in R to install the required packages:
 ``` r
-install.packages("")
-install.packages("")
-install.packages("")
+install.packages("insight")
+install.packages("effectsize")
+install.packages("rstanarm")
+install.packages("easystats")
+install.packages("dplyr")
+install.packages("performance")
 ```
 
 Load the required packages:
 ``` r
-library()
-library()
-library()
+library(insight)
+library(effectsize)
+library(rstanarm)
+library(easystats)
+library(dplyr)
+library(performance)
 ```
 
 ### Import data
