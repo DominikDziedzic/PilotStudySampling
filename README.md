@@ -18,7 +18,9 @@ Content of the repository (after opening each file, right-click and select Save 
 - **Experimental materials**
   -  [in .docx]()
   -  [in .pdf]() 
-- [**Source code in .R**]()
+- **Source code in .R**
+  - [Frequentist and Bayesian Linear Regression](https://raw.githubusercontent.com/DominikDziedzic/PilotStudySampling/main/Analysis%2C%20Frequentist%20and%20Bayesian%20Linear%20Regression.R)
+  - Mediation Analysis()
 
 # Analysis
 
