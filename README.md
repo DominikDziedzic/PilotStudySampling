@@ -143,7 +143,7 @@ effectsize::eta_squared(model)
 # probability |           0.12 | [0.02, 0.27]
 ```
 
-And beta coefficients (standarized coefficients):
+Beta coefficients (standarized coefficients):
 ``` r
 dataStand <- lapply(data, scale) # standardizes all variables
 modelStand <- lm(reference ~ valence + probability, data = dataStand)
