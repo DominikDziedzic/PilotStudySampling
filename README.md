@@ -13,11 +13,11 @@ To view the extended list of references on the sampling mechanism, visit: [**Lis
 
 Content of the repository (after opening each file, right-click and select Save as):
 - **Raw data** 
-  - [in .txt]() 
-  - [in .csv]()
+  - in .txt() 
+  - in .csv()
 - **Experimental materials**
-  -  [in .docx]()
-  -  [in .pdf]() 
+  -  in .docx()
+  -  in .pdf() 
 - **Source code in .R**
   - [Frequentist and Bayesian Linear Regression](https://raw.githubusercontent.com/DominikDziedzic/PilotStudySampling/main/Analysis%2C%20Frequentist%20and%20Bayesian%20Linear%20Regression.R)
   - Mediation Analysis()
