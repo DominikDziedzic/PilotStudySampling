@@ -376,7 +376,7 @@ summary(m1)
 
 # Simulations: 1000
 ```
-A mediation analysis yielded the 95% CI for the direct effect (ADE), mediator effect (ACME), and the total effect. The proportion mediated is the indirect effect divided by the total effect. Mediate() & mediation() functions in "mediation" package will be used in analogous analyses in Bayesian framework for comparison purposes.
+A mediation analysis yielded the 95% CI for the direct effect (ADE), indirect effect (ACME), and the total effect. The proportion mediated is the indirect effect divided by the total effect. Mediate() & mediation() functions in "mediation" package will be used in analogous analyses in Bayesian framework for comparison purposes.
 
 First, however, let's conduct a similar analysis on `probability`.
 
