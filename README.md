@@ -27,7 +27,7 @@ Content of the repository (after opening each file, right-click and select Save 
 The results of statistical analyses are presented below: 
 - [**Frequentist Linear Regression**](https://github.com/DominikDziedzic/PilotStudySampling#frequentist-linear-regression)
 - [**Bayesian Linear Regression**](https://github.com/DominikDziedzic/PilotStudySampling#bayesian-linear-regression)
-- **Mediation Analysis**
+- **Mediation Analysis**:
   - [Frequentist Variant](https://github.com/DominikDziedzic/PilotStudySampling#frequentist-variant)
   - [Bayesian Variant](https://github.com/DominikDziedzic/PilotStudySampling#bayesian-variant)
 - [**References**](https://github.com/DominikDziedzic/PilotStudySampling#references)
