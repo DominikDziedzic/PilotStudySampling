@@ -312,6 +312,78 @@ summary(lm(reference ~ sub_valence, data = data))
 ```
 Step b: `sub_valence` (mediator) correlates with the DV.
 
+``` r
+summary(lm(reference ~ sub_valence + valence, data = data))
+# Coefficients:
+#             Estimate Std. Error t value Pr(>|t|)  
+# (Intercept) 0.222177   0.089551   2.481   0.0161 *
+# sub_valence 0.003320   0.002245   1.479   0.1448  
+# valence     0.216270   0.167452   1.292   0.2018  
+# ---
+# Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+# Residual standard error: 0.462 on 56 degrees of freedom
+# Multiple R-squared:  0.1839,	Adjusted R-squared:  0.1547 
+# F-statistic: 6.308 on 2 and 56 DF,  p-value: 0.003385
+```
+Step c: the correlation of `valence` and the DV becomes weaker once the influence of `sub_valence` is accounted for.
+
+``` r
+cor.test(data$valence, data$reference)
+# 	Pearson's product-moment correlation
+
+# data:  data$valence and data$reference
+# t = 3.1962, df = 57, p-value = 0.002272
+# alternative hypothesis: true correlation is not equal to 0
+# 95 percent confidence interval:
+#  0.1486061 0.5873018
+# sample estimates:
+#       cor 
+# 0.3898524
+
+cor.test(data$sub_valence, data$reference)
+# 	Pearson's product-moment correlation
+
+# data:  data$sub_valence and data$reference
+# t = 3.2894, df = 57, p-value = 0.001725
+# alternative hypothesis: true correlation is not equal to 0
+# 95 percent confidence interval:
+#  0.1596783 0.5946821
+# sample estimates:
+#       cor 
+# 0.3994276 
+```
+The DV is significantly correlated both with `valence` (_r_ = 0.390, _p_ < 0.01) and `sub_valence`(_r_ = 0.399, _p_ < 0.01).
+
+``` r
+stepa2 <- lm(sub_valence ~ valence, data = data) #a2) mediator correlates with IV
+stepc <- lm(reference ~ sub_valence + valence, data = data) #c) the correlation of the IV on the DV becomes weaker once the influence of the mediator is accounted for
+m1 <- mediate(stepa2, stepc, sims = 1000, treat = "valence", mediator = "sub_valence")
+summary(m1)
+# Causal Mediation Analysis 
+
+# Quasi-Bayesian Confidence Intervals
+
+#                Estimate 95% CI Lower 95% CI Upper p-value   
+# ACME             0.1755      -0.0351         0.39   0.120   
+# ADE              0.2092      -0.1188         0.53   0.196   
+# Total Effect     0.3847       0.1537         0.62   0.002 **
+# Prop. Mediated   0.4461      -0.1007         1.53   0.122   
+# ---
+# Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+# Sample Size Used: 59 
+
+# Simulations: 1000
+```
+A mediation analysis yielded the 95% CI for the direct effect (ADE), mediator effect (ACME), and the total effect. The proportion mediated is the indirect effect divided by the total effect. Mediate() & mediation() functions in "mediation" package will be used in analogous analyses in Bayesian framework for comparison purposes.
+
+First, however, let's conduct a similar analysis on `probability`.
+
+``` r
+summary(lm(reference ~ probability, data = data))
+```
+
 ### Bayesian Variant
 
 ## References
