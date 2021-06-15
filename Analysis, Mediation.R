@@ -43,7 +43,7 @@ cor.test(data$sub_probability, data$reference) #correlation of mediator and DV
 stepa2 <- bf(sub_valence ~ valence)
 stepc <- bf(reference ~ sub_valence + valence)
 m2 <- brm(stepa2 + stepc + set_rescor(FALSE), data = data, cores = 4)
-# for brms
+
 mediation(m2, ci = 0.95)
 
 # Bayesian framework: valence, model in rstanarm
