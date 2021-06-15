@@ -382,9 +382,123 @@ First, however, let's conduct a similar analysis on `probability`.
 
 ``` r
 summary(lm(reference ~ probability, data = data))
+# Coefficients:
+#             Estimate Std. Error t value Pr(>|t|)    
+# (Intercept)  0.31250    0.08498   3.677 0.000523 ***
+# probability  0.31713    0.12562   2.525 0.014392 *  
+# ---
+# Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+# Residual standard error: 0.4807 on 57 degrees of freedom
+# Multiple R-squared:  0.1006,	Adjusted R-squared:  0.08479 
+# F-statistic: 6.374 on 1 and 57 DF,  p-value: 0.01439
 ```
+Step a1: `probability` correlates with the DV.
+
+``` r
+summary(lm(sub_probability ~ probability, data = data))
+# Coefficients:
+#             Estimate Std. Error t value Pr(>|t|)    
+# (Intercept)   39.406      6.485   6.076 1.08e-07 ***
+# probability    3.483      9.587   0.363    0.718    
+# ---
+# Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+# Residual standard error: 36.69 on 57 degrees of freedom
+# Multiple R-squared:  0.00231,	Adjusted R-squared:  -0.01519 
+# F-statistic: 0.132 on 1 and 57 DF,  p-value: 0.7177
+```
+Step a2: `sub_probability` (mediator) **does not** correlate with `probability`.
+
+``` r
+summary(lm(reference ~ sub_probability, data = data))
+# Coefficients:
+#                 Estimate Std. Error t value Pr(>|t|)   
+# (Intercept)     0.221413   0.090737   2.440   0.0178 * 
+# sub_probability 0.005761   0.001661   3.469   0.0010 **
+# ---
+# Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+# Residual standard error: 0.4606 on 57 degrees of freedom
+# Multiple R-squared:  0.1743,	Adjusted R-squared:  0.1598 
+# F-statistic: 12.03 on 1 and 57 DF,  p-value: 0.001003
+```
+Step b: `sub_probability` correlates with the DV.
+
+``` r
+summary(lm(reference ~ sub_probability + probability, data = data))
+# Coefficients:
+#                 Estimate Std. Error t value Pr(>|t|)    
+# (Intercept)     0.093250   0.099636   0.936 0.353341    
+# sub_probability 0.005564   0.001585   3.510 0.000893 ***
+# probability     0.297753   0.114873   2.592 0.012147 *  
+# ---
+# Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+# Residual standard error: 0.4391 on 56 degrees of freedom
+# Multiple R-squared:  0.2627,	Adjusted R-squared:  0.2364 
+# F-statistic: 9.978 on 2 and 56 DF,  p-value: 0.0001965
+```
+Step c: the correlation of the IV on the DV **does not** become weaker once the influence of the mediator is accounted for. There are no reasons to conduct the mediation analysis in this case; in what follows (i.e., in Bayesian variant), the mediation of `sub_probability` on the `probability` -> `reference` connection will be omitted.
 
 ### Bayesian Variant
+`Valence`, model in brms:
+
+``` r
+stepa2 <- bf(sub_valence ~ valence)
+stepc <- bf(reference ~ sub_valence + valence)
+m2 <- brm(stepa2 + stepc + set_rescor(FALSE), data = data, cores = 4)
+
+# Causal Mediation Analysis for Stan Model
+
+#   Treatment: valence
+#   Mediator : sub_valence
+#   Response : reference
+
+# Effect                 | Estimate |         95% ETI
+# ---------------------------------------------------
+# Direct Effect (ADE)    |    0.214 | [-0.117, 0.561]
+# Indirect Effect (ACME) |    0.166 | [-0.071, 0.418]
+# Mediator Effect        |    0.003 | [-0.001, 0.008]
+# Total Effect           |    0.387 | [ 0.127, 0.637]
+
+# Proportion mediated: 42.97% [-48.50%, 134.44%]
+```
+
+`Valence`, model in rstanarm:
+``` r
+m3 <- stan_mvmer(
+  list(sub_valence ~ valence + (1 | sub_probability),
+       reference ~ sub_valence + valence + (1 | sub_probability)),
+  data = data,
+  cores = 4,
+  refresh = 0)
+  
+# Causal Mediation Analysis for Stan Model
+
+#   Treatment: valence
+#   Mediator : sub_valence
+#   Response : reference
+
+# Effect                 | Estimate |         95% ETI
+# ---------------------------------------------------
+# Direct Effect (ADE)    |    0.204 | [-0.160, 0.560]
+# Indirect Effect (ACME) |    0.163 | [-0.074, 0.443]
+# Mediator Effect        |    0.003 | [-0.002, 0.008]
+# Total Effect           |    0.370 | [ 0.114, 0.627]
+
+# Proportion mediated: 43.90% [-56.01%, 143.82%]
+```
+
+As you can see, the results of brms- and rstanarm-based analyses are similar to what the mediation package produces for non-Bayesian models, i.e.:
+``` r
+#                  m1      m2       m3
+# DE (ADE):        0.209   0.214    0.203
+# IE (ACME):       0.176   0.166    0.163
+# Mediator E:      -       0.003    0.003
+# Total E:         0.385   0.387    0.370
+# Proportions Mediated:    42.97%   43.90%
+```
 
 ## References
 - Ben-Shachar, M., Lüdecke, D., Makowski, D. (2020). effectsize: Estimation of Effect Size Indices and Standardized Parameters. Journal of Open Source Software, 5(56), 2815. doi:10.21105/joss.02815
