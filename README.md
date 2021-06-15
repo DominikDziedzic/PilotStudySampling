@@ -62,7 +62,7 @@ library(brms)
 ```
 
 ### Import data
-Download raw data files in [.txt]() or [.csv format]() and run the following in R to import data:
+Download raw data files in [.txt](https://raw.githubusercontent.com/DominikDziedzic/PilotStudySampling/main/data.txt) or [.csv format](https://raw.githubusercontent.com/DominikDziedzic/PilotStudySampling/main/data.csv) and run the following in R to import data:
 ``` r
 # a) if in .txt:
 data <- read.delim(file.choose())
