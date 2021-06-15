@@ -55,3 +55,7 @@ m3 <- stan_mvmer(
   refresh = 0
 )
 mediation(m3, ci = 0.95)
+
+# References
+library(report)
+cite_packages()
