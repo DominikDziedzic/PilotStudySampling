@@ -13,14 +13,14 @@ To view the extended list of references on the sampling mechanism, visit: [**Lis
 
 Content of the repository (after opening each file, right-click and select Save as):
 - **Raw data** 
-  - in .txt() 
-  - in .csv()
+  - [in .txt](https://raw.githubusercontent.com/DominikDziedzic/PilotStudySampling/main/data.txt) 
+  - [in .csv](https://raw.githubusercontent.com/DominikDziedzic/PilotStudySampling/main/data.csv)
 - **Experimental materials**
   -  [in .docx](https://github.com/DominikDziedzic/PilotStudySampling/blob/main/Experimental%20Materials.docx?raw=true)
   -  [in .pdf](https://github.com/DominikDziedzic/PilotStudySampling/raw/main/Experimental%20Materials.pdf) 
 - **Source code in .R**
   - [Frequentist and Bayesian Linear Regression](https://raw.githubusercontent.com/DominikDziedzic/PilotStudySampling/main/Analysis%2C%20Frequentist%20and%20Bayesian%20Linear%20Regression.R)
-  - Mediation Analysis()
+  - [Mediation Analysis](https://raw.githubusercontent.com/DominikDziedzic/PilotStudySampling/main/Analysis%2C%20Mediation.R)
 
 # Analysis
 
@@ -43,6 +43,9 @@ install.packages("rstanarm")
 install.packages("easystats")
 install.packages("dplyr")
 install.packages("performance")
+install.packages("mediation")
+install.packages("bayestestR")
+install.packages("brms")
 ```
 
 Load the required packages:
@@ -53,6 +56,9 @@ library(rstanarm)
 library(easystats)
 library(dplyr)
 library(performance)
+library(mediation)
+library(bayestestR)
+library(brms)
 ```
 
 ### Import data
@@ -73,8 +79,8 @@ str(data)
 #  $ valence        : int  1 1 1 1 1 1 1 1 1 1 ...
 #  $ probability    : int  1 1 1 1 1 1 1 1 1 1 ...
 #  $ reference      : int  1 0 1 0 1 1 1 1 1 1 ...
-#  $ sub_valence    : int  TODO
-#  $ sub_probability: int  TODO
+#  $ sub_valence    : int  1 70 50 19 50 100 50 100 88 50 ...
+#  $ sub_probability: int  99 55 100 44 50 50 20 0 22 100 ...
 ```
 The dataset consists of two IVs (i.e., `valence` and `probability`) and the DV (`reference` = responses to a scenario). The length of the dataset is 59. Assignment to conditions was random, with 13 participants in the good-probable condition, 16 in the good-improbable, 14 in the bad-probable, and 16 in the bad-improbable. Definitions of the conditions are as follow:
 - In the **good-probable condition**, the participant reads the following scenario:
