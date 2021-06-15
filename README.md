@@ -265,6 +265,52 @@ model_performance(model)
 ## Mediation Analysis
 
 ### Frequentist Variant
+`Valence`
+
+``` r
+summary(lm(reference ~ valence, data = data))
+# Coefficients:
+#             Estimate Std. Error t value Pr(>|t|)   
+# (Intercept)  0.26667    0.08522   3.129  0.00276 **
+# valence      0.38851    0.12155   3.196  0.00227 **
+# ---
+# Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+# Residual standard error: 0.4668 on 57 degrees of freedom
+# Multiple R-squared:  0.152,	Adjusted R-squared:  0.1371 
+# F-statistic: 10.22 on 1 and 57 DF,  p-value: 0.002272
+```
+Step a1: `valence` correlates with the DV.
+
+``` r
+summary(lm(sub_valence ~ valence, data = data))
+# Coefficients:
+#             Estimate Std. Error t value Pr(>|t|)    
+# (Intercept)   13.400      4.976   2.693  0.00928 ** 
+# valence       51.876      7.097   7.309  9.7e-10 ***
+# ---
+# Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+# Residual standard error: 27.25 on 57 degrees of freedom
+# Multiple R-squared:  0.4838,	Adjusted R-squared:  0.4748 
+# F-statistic: 53.43 on 1 and 57 DF,  p-value: 9.701e-10
+```
+Step a2: `sub_valence` (mediator) correlates with `valence`.
+
+``` r
+summary(lm(reference ~ sub_valence, data = data))
+# Coefficients:
+#             Estimate Std. Error t value Pr(>|t|)   
+# (Intercept) 0.250018   0.087425   2.860  0.00591 **
+# sub_valence 0.005337   0.001623   3.289  0.00172 **
+# ---
+# Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+# Residual standard error: 0.4647 on 57 degrees of freedom
+# Multiple R-squared:  0.1595,	Adjusted R-squared:  0.1448 
+# F-statistic: 10.82 on 1 and 57 DF,  p-value: 0.001725
+```
+Step b: `sub_valence` (mediator) correlates with the DV.
 
 ### Bayesian Variant
 
