@@ -69,7 +69,7 @@ data <- read.delim(file.choose())
 # b) if in .csv:
 data <- read.csv(file.choose(), sep = ";")
 
-attach(data) # attach your data, so that objects in the database can be accessed by giving their names
+attach(data) # attach your data, so that objects in the dataset can be accessed by giving their names
 ```
 
 Let's review the dataset:
