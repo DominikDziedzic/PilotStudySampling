@@ -1,4 +1,4 @@
-# Pilot Study on Samplinga
+# Pilot Study on Sampling
 Repository for storing materials and data from the pilot study on sampling to accompany ["Sources of Philosophical Intuitions: Towards a Model of Intuition Generation"](https://github.com/DominikDziedzic/IntuitionGenerationProject) project.
 
 This study demonstrates the causal relationship between value- and probability-guided judgments, and responses. David Kaplan’s ‘Carnap vs. Agnew’ case (1978, p. 239) concerning the reference of demonstratives has been converted to experimental materials and presented to participants in one of four conditions.
